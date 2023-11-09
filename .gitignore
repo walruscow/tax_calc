@@ -1,0 +1,7 @@
+secrets.py
+auto_build.sh
+*.swp
+.venv
+__pycache__
+node_modules
+localhost.pem
