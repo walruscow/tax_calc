@@ -75,6 +75,81 @@ const additional_taxes_2023 = [
   },
 ];
 
+const tax_brackets_2025 = [
+  {
+    label: "🧑 👑",
+    sub_label: "Single",
+    deduction: 14000, // Estimated standard deduction
+    buckets: [
+      {rate: .10, upper_bound: 11925},
+      {rate: .12, upper_bound: 48475},
+      {rate: .22, upper_bound: 103350},
+      {rate: .24, upper_bound: 197300},
+      {rate: .32, upper_bound: 250525},
+      {rate: .35, upper_bound: 626350},
+      {rate: .37, upper_bound: Infinity},
+    ],
+  },
+  {
+    label: "🧑‍🤝‍🧑",
+    sub_label: "Married jointly",
+    deduction: 28000, // Estimated standard deduction
+    buckets: [
+      {rate: .10, upper_bound: 23850},
+      {rate: .12, upper_bound: 96950},
+      {rate: .22, upper_bound: 206700},
+      {rate: .24, upper_bound: 394600},
+      {rate: .32, upper_bound: 501050},
+      {rate: .35, upper_bound: 751600},
+      {rate: .37, upper_bound: Infinity},
+    ],
+  },
+  {
+    label: "🧑🧑",
+    sub_label: "Married separately",
+    deduction: 14000, // Estimated standard deduction
+    buckets: [
+      {rate: .10, upper_bound: 11925},
+      {rate: .12, upper_bound: 48475},
+      {rate: .22, upper_bound: 103350},
+      {rate: .24, upper_bound: 197300},
+      {rate: .32, upper_bound: 250525},
+      {rate: .35, upper_bound: 375800},
+      {rate: .37, upper_bound: Infinity},
+    ],
+  },
+  {
+    label: "🧑👶",
+    sub_label: "Head of household",
+    deduction: 21000, // Estimated standard deduction
+    buckets: [
+      {rate: .10, upper_bound: 17000},
+      {rate: .12, upper_bound: 64850},
+      {rate: .22, upper_bound: 103350},
+      {rate: .24, upper_bound: 197300},
+      {rate: .32, upper_bound: 250500},
+      {rate: .35, upper_bound: 626350},
+      {rate: .37, upper_bound: Infinity},
+    ],
+  },
+];
+
+const additional_taxes_2025 = [
+  {
+    label: "social security",
+    buckets: [
+      {rate: .062, upper_bound: 176100},
+    ],
+  },
+  {
+    label: "medicare",
+    buckets: [
+      {rate: 0.0145, upper_bound: 200000},
+      {rate: 0.0235, upper_bound: Infinity},
+    ],
+  },
+];
+
 function BracketResult(props) {
   const r = props.result;
   return (
@@ -172,10 +247,10 @@ class TaxApp extends React.Component {
       return summed;
     }
 
-    const brackets = tax_brackets_2023.map(function (bracket) {
+    const brackets = tax_brackets_2025.map(function (bracket) {
       let remaining = income - bracket.deduction;
       let summed = sum_buckets(income - bracket.deduction, bracket.buckets);
-      additional_taxes_2023.forEach(function(t) {
+      additional_taxes_2025.forEach(function(t) {
         summed += sum_buckets(income, t.buckets);
       });
 
